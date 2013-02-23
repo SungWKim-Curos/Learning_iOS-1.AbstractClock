@@ -22,6 +22,7 @@ static inline int RAND_INT( int iMin, int iMax )
 @implementation MainViewController
 {
     NSMutableArray* _oShapeVwArr ;
+    NSTimer* _oTimer ;
 }
 
 
@@ -41,11 +42,30 @@ static inline int RAND_INT( int iMin, int iMax )
         
         oImgVw.transform = scaleTransf ;
         oImgVw.center = CGPointMake( RAND_INT(0,320), RAND_INT(0,480) ) ;
+        oImgVw.alpha = 0 ;
         
         [ _oShapeVwArr addObject:oImgVw ] ;
         [ super.view addSubview:oImgVw ] ;
     }
 }
+
+
+
+-(void) viewWillAppear:(BOOL)a_animated
+{
+    _oTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime)
+                                             userInfo:nil repeats:YES ] ;
+}
+
+
+
+-(void) viewDidDisappear:(BOOL)a_animated
+{
+    [ _oTimer invalidate ] ;
+    _oTimer = nil ;
+}
+
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -66,6 +86,32 @@ static inline int RAND_INT( int iMin, int iMax )
     controller.delegate = self;
     controller.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:controller animated:YES completion:nil];
+}
+
+
+
+#pragma mark - ETC
+
+
+-(void) updateTime
+{
+    NSDate* oNow = [ NSDate date ] ;
+    NSCalendar* oCal = [ NSCalendar currentCalendar ] ;
+    NSCalendarUnit calUnits = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit |
+                              NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit ;
+    NSDateComponents* oComp = [ oCal components:calUnits fromDate:oNow ] ;
+    
+    int iSec = oComp.second ;
+    
+    UIImageView* oImgVw = _oShapeVwArr[iSec%10] ;
+    oImgVw.alpha = 0.3 ;
+    float fScale = RAND_INT(20,100) / 100.0 ;    
+    
+    [ UIView beginAnimations:nil context:NULL ] ;
+    [ UIView setAnimationDuration:1.0 ] ;
+    [ UIView setAnimationCurve:UIViewAnimationCurveEaseOut ] ;
+    oImgVw.transform = CGAffineTransformMakeScale( fScale, fScale ) ;
+    [ UIView commitAnimations ] ;    
 }
 
 @end
