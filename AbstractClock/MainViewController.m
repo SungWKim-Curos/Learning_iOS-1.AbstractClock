@@ -116,7 +116,23 @@ static inline int RAND_INT( int iMin, int iMax )
     [ UIView setAnimationDuration:1.0 ] ;
     [ UIView setAnimationCurve:UIViewAnimationCurveEaseOut ] ;
     oImgVw.transform = CGAffineTransformMakeScale( fScale, fScale ) ;
+    if( iSec%10 == 0 )
+        ClearScreen( self ) ;
     [ UIView commitAnimations ] ;    
+}
+
+
+
+void ClearScreen( MainViewController* a_oSelf )
+{
+    const CGAffineTransform scaleTransf = CGAffineTransformMakeScale( 0.1, 0.1 ) ;
+    
+    for( UIImageView* oImgVw in a_oSelf->_oShapeVwArr )
+    {
+        oImgVw.alpha = 0 ;
+        oImgVw.transform = scaleTransf ;
+        oImgVw.center = CGPointMake( RAND_INT(0,320), RAND_INT(0,480) ) ;
+    }
 }
 
 @end
