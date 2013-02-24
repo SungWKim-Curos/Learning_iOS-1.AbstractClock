@@ -26,6 +26,8 @@ static inline int RAND_INT( int iMin, int iMax )
     
     CLOCK_SHAPE_t _iShape ;
     CLOCK_SHAPE_t _iNewShape ;
+    
+    BOOL _24HourMode ;
 }
 
 
@@ -40,7 +42,11 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
     if( nil == self )
         return nil ;
     
-    _iShape = _iNewShape = [ [NSUserDefaults standardUserDefaults] integerForKey:CLOCK_OPTION_SHAPE ] ;  
+    NSUserDefaults* oUsrDefs = [ NSUserDefaults standardUserDefaults ] ;
+    _iShape = _iNewShape = [ oUsrDefs integerForKey:CLOCK_OPTION_SHAPE ] ;
+    _24HourMode = [ oUsrDefs boolForKey:CLOCK_OPTION_24HOUR ] ;
+    if( _24HourMode )
+        _amPm.text = @"" ;
     
     return self ;
 }
@@ -69,6 +75,7 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
         [ super.view addSubview:oImgVw ] ;
     }
     
+    [ self.view bringSubviewToFront:_amPm ] ;
     [ self.view bringSubviewToFront:_timeDigit ] ;
 }
 
@@ -139,7 +146,9 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
 
 -(void) changed24Mode:(BOOL)a_on
 {
-    
+    _24HourMode = a_on ;
+    if( _24HourMode )
+        _amPm.text = @"" ;
 }
 
 
@@ -162,6 +171,22 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
     NSDateComponents* oComp = [ oCal components:calUnits fromDate:oNow ] ;
     
     int iHours = oComp.hour ;
+    
+    if( ! _24HourMode )
+    {
+        if( iHours > 12 )
+        {
+            _amPm.text = @"PM" ;
+            iHours -= 12 ;
+        }
+        else
+        {
+            _amPm.text = @"AM" ;
+            if( 0 == iHours )
+                iHours = 12 ;            
+        }
+    }
+
     int iMinutes = oComp.minute ;
     int iSec = oComp.second ;
     _timeDigit.text = [NSString stringWithFormat:@"%2d:%02d:%02d", iHours, iMinutes, iSec ] ;
