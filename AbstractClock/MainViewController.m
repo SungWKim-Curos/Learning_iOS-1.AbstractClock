@@ -28,6 +28,7 @@ static inline int RAND_INT( int iMin, int iMax )
     CLOCK_SHAPE_t _iNewShape ;
     
     BOOL _24HourMode ;
+    BOOL _displayDate ;
 }
 
 
@@ -45,8 +46,7 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
     NSUserDefaults* oUsrDefs = [ NSUserDefaults standardUserDefaults ] ;
     _iShape = _iNewShape = [ oUsrDefs integerForKey:CLOCK_OPTION_SHAPE ] ;
     _24HourMode = [ oUsrDefs boolForKey:CLOCK_OPTION_24HOUR ] ;
-    if( _24HourMode )
-        _amPm.text = @"" ;
+    _displayDate = [ oUsrDefs boolForKey:CLOCK_OPTION_DATE_DISPLAY ] ;
     
     return self ;
 }
@@ -76,6 +76,7 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
     }
     
     [ self.view bringSubviewToFront:_amPm ] ;
+    [ self.view bringSubviewToFront:_date ] ;
     [ self.view bringSubviewToFront:_timeDigit ] ;
 }
 
@@ -154,6 +155,9 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
 
 -(void) changedDateInfo:(BOOL)a_on
 {
+    _displayDate = a_on ;
+    if( ! _displayDate )
+        _date.text = @"" ;
     
 }
 
@@ -166,8 +170,7 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
 {
     NSDate* oNow = [ NSDate date ] ;
     NSCalendar* oCal = [ NSCalendar currentCalendar ] ;
-    NSCalendarUnit calUnits = NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit |
-                              NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit ;
+    NSCalendarUnit calUnits = NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit ;
     NSDateComponents* oComp = [ oCal components:calUnits fromDate:oNow ] ;
     
     int iHours = oComp.hour ;
@@ -190,6 +193,14 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
     int iMinutes = oComp.minute ;
     int iSec = oComp.second ;
     _timeDigit.text = [NSString stringWithFormat:@"%2d:%02d:%02d", iHours, iMinutes, iSec ] ;
+    
+    if( _displayDate )
+    {
+        NSDateFormatter* oDateFmtr = [ [NSDateFormatter alloc] init ] ;
+        [ oDateFmtr setDateFormat:@"yyyy-MM-dd EEEE" ] ;
+        NSString* oDateStr = [ oDateFmtr stringFromDate:oNow ] ;
+        _date.text = oDateStr ;
+    }
     
     UIImageView* oImgVw = _oShapeVwArr[iSec%10] ;
     oImgVw.alpha = 0.3 ;

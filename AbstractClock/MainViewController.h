@@ -14,5 +14,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *timeDigit;
 @property (weak, nonatomic) IBOutlet UILabel *amPm;
+@property (weak, nonatomic) IBOutlet UILabel *date;
 
 @end
