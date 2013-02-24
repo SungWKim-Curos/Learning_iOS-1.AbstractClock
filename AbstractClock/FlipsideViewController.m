@@ -30,7 +30,7 @@ static NSString* const FOOTER[] =
     @"Abstract Clock Ver 1.0\nKeep up the good work!\n\n"
 };
 
-static NSString* const SECT0_SHAPE_LABEL[] = { @"Squres", @"Circles" } ;
+static NSString* const SECT0_SHAPE_LABEL[] = { @"Squares", @"Circles" } ;
 
 static NSString* const SECT1_OPTION_LABEL[] = { @"24 Hours Mode", @"Date Information", @"Allow Auto-Lock" } ;
 static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_DATE_DISPLAY, CLOCK_OPTION_AUTOLOCK } ;
@@ -123,6 +123,33 @@ static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_
     
     return oCell ;
     
+}
+
+
+
+-(void) tableView:(UITableView*)a_oTblVw didSelectRowAtIndexPath:(NSIndexPath*)a_oIndexPath
+{
+    if( 1 == a_oIndexPath.section )
+        return ;
+    
+    NSUserDefaults* oUserDefs = [ NSUserDefaults standardUserDefaults ] ;
+    NSInteger iOldShape = [ oUserDefs integerForKey:CLOCK_OPTION_SHAPE ] ;
+    NSInteger iRow = a_oIndexPath.row ;
+    if( iOldShape != iRow )
+    {
+        NSIndexPath* oOldIndexPath = [ NSIndexPath indexPathForRow:iOldShape inSection:0 ] ;
+        [ a_oTblVw cellForRowAtIndexPath:oOldIndexPath ].accessoryType = UITableViewCellAccessoryNone ;
+        [ a_oTblVw cellForRowAtIndexPath:a_oIndexPath ].accessoryType = UITableViewCellAccessoryCheckmark ;
+    
+        [ oUserDefs setInteger:iRow forKey:CLOCK_OPTION_SHAPE ] ;
+#ifdef DEBUG
+        [ oUserDefs synchronize ] ;
+#endif
+        
+        [ _delegate changedShape:(CLOCK_SHAPE_t)iRow ] ;
+    }
+    
+    [ a_oTblVw deselectRowAtIndexPath:a_oIndexPath animated:YES ] ;
 }
 
 
