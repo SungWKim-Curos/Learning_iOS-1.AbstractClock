@@ -23,7 +23,28 @@ static inline int RAND_INT( int iMin, int iMax )
 {
     NSMutableArray* _oShapeVwArr ;
     NSTimer* _oTimer ;
+    
+    CLOCK_SHAPE_t _iShape ;
+    CLOCK_SHAPE_t _iNewShape ;
 }
+
+
+
+static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%d.png" } ;
+
+
+
+-(id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [ super initWithNibName:nibNameOrNil bundle:nibBundleOrNil ] ;
+    if( nil == self )
+        return nil ;
+    
+    _iShape = _iNewShape = [ [NSUserDefaults standardUserDefaults] integerForKey:CLOCK_OPTION_SHAPE ] ;  
+    
+    return self ;
+}
+
 
 
 - (void)viewDidLoad
@@ -36,7 +57,7 @@ static inline int RAND_INT( int iMin, int iMax )
     
     for( int i=0 ; i<iSHAPE_ARRAY_SIZE ; ++i )
     {
-        NSString* oImgName = [ NSString stringWithFormat:@"PatchSquare%d.png", i ] ;
+        NSString* oImgName = [ NSString stringWithFormat:SHAPE_NAME_FMT[_iShape], i ] ;
         UIImage* oImg = [ UIImage imageNamed:oImgName ] ;
         UIImageView* oImgVw = [ [UIImageView alloc] initWithImage:oImg ] ;
         
@@ -55,6 +76,21 @@ static inline int RAND_INT( int iMin, int iMax )
 
 -(void) viewWillAppear:(BOOL)a_animated
 {
+    if( _iShape != _iNewShape )
+    {
+        _iShape = _iNewShape ;
+        
+        for( int i=0 ; i<iSHAPE_ARRAY_SIZE ; ++i )
+        {
+            NSString* oImgName = [ NSString stringWithFormat:SHAPE_NAME_FMT[_iShape], i ] ;
+            UIImage* oImg = [ UIImage imageNamed:oImgName ] ;
+            UIImageView* oImgVw = (UIImageView*)_oShapeVwArr[i] ;
+            oImgVw.image = oImg ;
+        }
+        
+        ClearScreen( self ) ;
+    }
+    
     _oTimer = [ NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTime)
                                              userInfo:nil repeats:YES ] ;
 }
@@ -97,7 +133,7 @@ static inline int RAND_INT( int iMin, int iMax )
 
 -(void) changedShape:(CLOCK_SHAPE_t)a_shape
 {
-    
+    _iNewShape = a_shape ;
 }
 
 
