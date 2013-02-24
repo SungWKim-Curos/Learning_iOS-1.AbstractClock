@@ -23,6 +23,12 @@
 static const int TABLE_ROWS[] = { 2, 3 } ;
 static const int iTABLE_SECTIONS = sizeof(TABLE_ROWS)/sizeof(TABLE_ROWS[0]) ;
 static NSString* const REUSE_ID[] = { @"Simple", @"Switch" } ;
+static NSString* const HEADER[] = { @"Shape Type", @"Options" } ;
+static NSString* const FOOTER[] =
+{
+    nil,
+    @"Abstract Clock Ver 1.0\nKeep up the good work!\n\n"
+};
 
 static NSString* const SECT0_SHAPE_LABEL[] = { @"Squres", @"Circles" } ;
 
@@ -58,6 +64,20 @@ static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)a_iSection
 {
     return TABLE_ROWS[a_iSection] ;
+}
+
+
+
+-(NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return HEADER[section] ;
+}
+
+
+
+-(NSString*) tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+    return FOOTER[section] ;
 }
 
 
