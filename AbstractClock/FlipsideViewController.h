@@ -14,7 +14,7 @@
 - (void)flipsideViewControllerDidFinish:(FlipsideViewController *)controller;
 @end
 
-@interface FlipsideViewController : UIViewController
+@interface FlipsideViewController : UIViewController < UITableViewDelegate, UITableViewDataSource >
 
 @property (weak, nonatomic) id <FlipsideViewControllerDelegate> delegate;
 
