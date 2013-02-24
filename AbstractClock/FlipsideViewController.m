@@ -10,6 +10,8 @@
 
 @interface FlipsideViewController ()
 
+@property (strong, nonatomic) IBOutlet UITableViewCell *switchTableCell;
+
 @end
 
 @implementation FlipsideViewController
@@ -57,7 +59,16 @@ static NSString* const REUSE_ID[] = { @"Simple", @"Switch" } ;
     UITableViewCell* oCell = [ a_oTblVw dequeueReusableCellWithIdentifier:REUSE_ID[iSect] ] ;
     if( nil == oCell )
     {
-        oCell = [ [UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:REUSE_ID[iSect] ] ;
+        if( 1 == iSect )
+        {
+            UINib* oNib = [ UINib nibWithNibName:@"SwitchTableCell" bundle:[NSBundle mainBundle] ] ;
+            [ oNib instantiateWithOwner:self options:nil ] ;
+            oCell = _switchTableCell ;
+        }
+        else
+        {
+            oCell = [ [UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:REUSE_ID[iSect] ] ;
+        }
     }
     
     return oCell ;
