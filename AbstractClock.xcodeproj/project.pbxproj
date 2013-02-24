@@ -40,6 +40,7 @@
 		E2E07B2F16C954DC00B25C07 /* FlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E07B2E16C954DC00B25C07 /* FlipsideViewController.m */; };
 		E2E07B3216C954DC00B25C07 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E07B3016C954DC00B25C07 /* MainViewController.xib */; };
 		E2E07B3516C954DC00B25C07 /* FlipsideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E07B3316C954DC00B25C07 /* FlipsideViewController.xib */; };
+		E2F3189916D9C77400199BE3 /* SwitchTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2F3189816D9C77400199BE3 /* SwitchTableCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		E2E07B2E16C954DC00B25C07 /* FlipsideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlipsideViewController.m; sourceTree = "<group>"; };
 		E2E07B3116C954DC00B25C07 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainViewController.xib; sourceTree = "<group>"; };
 		E2E07B3416C954DC00B25C07 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FlipsideViewController.xib; sourceTree = "<group>"; };
+		E2F3189816D9C77400199BE3 /* SwitchTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchTableCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				E2E07B2E16C954DC00B25C07 /* FlipsideViewController.m */,
 				E2E07B3016C954DC00B25C07 /* MainViewController.xib */,
 				E2E07B3316C954DC00B25C07 /* FlipsideViewController.xib */,
+				E2F3189816D9C77400199BE3 /* SwitchTableCell.xib */,
 				E2E07B1916C954DC00B25C07 /* Supporting Files */,
 			);
 			path = AbstractClock;
@@ -260,6 +263,7 @@
 				E271500A16D12A0F009D1E97 /* PatchSquare7.png in Resources */,
 				E271500B16D12A0F009D1E97 /* PatchSquare8.png in Resources */,
 				E271500C16D12A0F009D1E97 /* PatchSquare9.png in Resources */,
+				E2F3189916D9C77400199BE3 /* SwitchTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
