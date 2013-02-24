@@ -47,6 +47,8 @@ static inline int RAND_INT( int iMin, int iMax )
         [ _oShapeVwArr addObject:oImgVw ] ;
         [ super.view addSubview:oImgVw ] ;
     }
+    
+    [ self.view bringSubviewToFront:_timeDigit ] ;
 }
 
 
@@ -101,7 +103,10 @@ static inline int RAND_INT( int iMin, int iMax )
                               NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit ;
     NSDateComponents* oComp = [ oCal components:calUnits fromDate:oNow ] ;
     
+    int iHours = oComp.hour ;
+    int iMinutes = oComp.minute ;
     int iSec = oComp.second ;
+    _timeDigit.text = [NSString stringWithFormat:@"%2d:%02d:%02d", iHours, iMinutes, iSec ] ;
     
     UIImageView* oImgVw = _oShapeVwArr[iSec%10] ;
     oImgVw.alpha = 0.3 ;

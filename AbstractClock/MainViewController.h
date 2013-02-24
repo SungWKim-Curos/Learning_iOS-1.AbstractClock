@@ -12,4 +12,6 @@
 
 - (IBAction)showInfo:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UILabel *timeDigit;
+
 @end
