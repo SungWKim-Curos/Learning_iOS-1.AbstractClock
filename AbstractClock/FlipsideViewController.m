@@ -119,16 +119,26 @@ static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_
 -(IBAction) switchChanged:(UISwitch*)a_oSenderSwitch
 {
     int iRow = a_oSenderSwitch.tag ;
+    BOOL switchOn = a_oSenderSwitch.on ;
+    NSUserDefaults* oUserDefs = [NSUserDefaults standardUserDefaults] ;
+    [ oUserDefs setBool:switchOn forKey:SECT1_OPTION_KEY[iRow] ] ;
+#ifdef DEBUG
+    [ oUserDefs synchronize ] ;
+#endif
+    
     switch( iRow )
     {
+        case 0 :
+            [ _delegate changed24Mode:switchOn ] ;
+            break ;
+            
+        case 1 :
+            [ _delegate changedDateInfo:switchOn ] ;
+            break ;
+            
         case 2 :
-        {
-            BOOL autoLockOn = a_oSenderSwitch.on ;
-            [UIApplication sharedApplication].idleTimerDisabled = NO==autoLockOn ;
-            NSUserDefaults* oUserDefs = [NSUserDefaults standardUserDefaults] ;
-            [ oUserDefs setBool:autoLockOn forKey:CLOCK_OPTION_AUTOLOCK ] ;
-        }
-        break;
+            [UIApplication sharedApplication].idleTimerDisabled = NO==switchOn ;
+            break;
     }
 }
 

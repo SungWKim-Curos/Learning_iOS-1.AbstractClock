@@ -92,6 +92,28 @@ static inline int RAND_INT( int iMin, int iMax )
 
 
 
+#pragma makr - FlipsideViewControllerDelegate
+
+
+-(void) changedShape:(CLOCK_SHAPE_t)a_shape
+{
+    
+}
+
+
+-(void) changed24Mode:(BOOL)a_on
+{
+    
+}
+
+
+-(void) changedDateInfo:(BOOL)a_on
+{
+    
+}
+
+
+
 #pragma mark - ETC
 
 
