@@ -10,7 +10,36 @@
 
 #import "MainViewController.h"
 
+#import "Constants.h"
+
+
+
 @implementation AppDelegate
+
+static NSString* const oFIRST_RUN = @"FirstRun" ;
+
+
+
++(void) initialize
+{
+    NSUserDefaults* oUserDef = [ NSUserDefaults standardUserDefaults ] ;
+    if( nil != [oUserDef objectForKey:oFIRST_RUN] )
+        return ;
+    
+    [ oUserDef setObject:[NSDate date] forKey:oFIRST_RUN] ;
+    [ oUserDef synchronize ] ;
+    
+    NSDictionary* oDic =
+    @{
+        CLOCK_OPTION_SHAPE: @(iCLOCK_SHAPE_SQURE),
+        CLOCK_OPTION_24HOUR: @NO,
+        CLOCK_OPTION_DATE_DISPLAY: @NO,
+        CLOCK_OPTION_AUTOLOCK: @NO
+    };
+    [ oUserDef registerDefaults:oDic ] ;
+}
+
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

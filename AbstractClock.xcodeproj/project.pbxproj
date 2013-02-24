@@ -84,6 +84,7 @@
 		E2E07B3116C954DC00B25C07 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainViewController.xib; sourceTree = "<group>"; };
 		E2E07B3416C954DC00B25C07 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FlipsideViewController.xib; sourceTree = "<group>"; };
 		E2F3189816D9C77400199BE3 /* SwitchTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchTableCell.xib; sourceTree = "<group>"; };
+		E2F3189B16D9E44200199BE3 /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,13 +159,14 @@
 		E2E07B1816C954DC00B25C07 /* AbstractClock */ = {
 			isa = PBXGroup;
 			children = (
+				E2F3189B16D9E44200199BE3 /* Constants.h */,
 				E2E07B2116C954DC00B25C07 /* AppDelegate.h */,
 				E2E07B2216C954DC00B25C07 /* AppDelegate.m */,
 				E2E07B2A16C954DC00B25C07 /* MainViewController.h */,
 				E2E07B2B16C954DC00B25C07 /* MainViewController.m */,
+				E2E07B3016C954DC00B25C07 /* MainViewController.xib */,
 				E2E07B2D16C954DC00B25C07 /* FlipsideViewController.h */,
 				E2E07B2E16C954DC00B25C07 /* FlipsideViewController.m */,
-				E2E07B3016C954DC00B25C07 /* MainViewController.xib */,
 				E2E07B3316C954DC00B25C07 /* FlipsideViewController.xib */,
 				E2F3189816D9C77400199BE3 /* SwitchTableCell.xib */,
 				E2E07B1916C954DC00B25C07 /* Supporting Files */,

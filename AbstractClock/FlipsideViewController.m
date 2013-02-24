@@ -8,6 +8,10 @@
 
 #import "FlipsideViewController.h"
 
+#import "Constants.h"
+
+
+
 @interface FlipsideViewController ()
 
 @property (strong, nonatomic) IBOutlet UITableViewCell *switchTableCell;
@@ -19,6 +23,11 @@
 static const int TABLE_ROWS[] = { 2, 3 } ;
 static const int iTABLE_SECTIONS = sizeof(TABLE_ROWS)/sizeof(TABLE_ROWS[0]) ;
 static NSString* const REUSE_ID[] = { @"Simple", @"Switch" } ;
+
+static NSString* const SECT0_SHAPE_LABEL[] = { @"Squres", @"Circles" } ;
+
+static NSString* const SECT1_OPTION_LABEL[] = { @"24 Hours Mode", @"Date Information", @"Allow Auto-Lock" } ;
+static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_DATE_DISPLAY, CLOCK_OPTION_24HOUR } ;
 
 
 
@@ -56,6 +65,8 @@ static NSString* const REUSE_ID[] = { @"Simple", @"Switch" } ;
 -(UITableViewCell*) tableView:(UITableView*)a_oTblVw cellForRowAtIndexPath:(NSIndexPath *)a_oIndexPath
 {
     NSInteger iSect = a_oIndexPath.section ;
+    NSInteger iRow = a_oIndexPath.row ;
+    
     UITableViewCell* oCell = [ a_oTblVw dequeueReusableCellWithIdentifier:REUSE_ID[iSect] ] ;
     if( nil == oCell )
     {
@@ -69,6 +80,24 @@ static NSString* const REUSE_ID[] = { @"Simple", @"Switch" } ;
         {
             oCell = [ [UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:REUSE_ID[iSect] ] ;
         }
+    }
+    
+    switch ( iSect )
+    {
+        case 0 :
+        {
+            oCell.textLabel.text = SECT0_SHAPE_LABEL[iRow] ;
+            NSInteger iShape = [ [NSUserDefaults standardUserDefaults] integerForKey:CLOCK_OPTION_SHAPE ] ;
+            oCell.accessoryType = iShape==iRow ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone ;
+        }
+            break;
+            
+        case 1 :
+            oCell.textLabel.text = SECT1_OPTION_LABEL[iRow] ;
+            oCell.selectionStyle = UITableViewCellSelectionStyleNone ;
+            UISwitch* oSwitch = (UISwitch*)oCell.accessoryView ;
+            oSwitch.on = [ [NSUserDefaults standardUserDefaults] boolForKey:SECT1_OPTION_KEY[iRow] ] ;
+            break ;
     }
     
     return oCell ;
