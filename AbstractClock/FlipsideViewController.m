@@ -27,7 +27,7 @@ static NSString* const REUSE_ID[] = { @"Simple", @"Switch" } ;
 static NSString* const SECT0_SHAPE_LABEL[] = { @"Squres", @"Circles" } ;
 
 static NSString* const SECT1_OPTION_LABEL[] = { @"24 Hours Mode", @"Date Information", @"Allow Auto-Lock" } ;
-static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_DATE_DISPLAY, CLOCK_OPTION_24HOUR } ;
+static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_DATE_DISPLAY, CLOCK_OPTION_AUTOLOCK } ;
 
 
 
@@ -97,6 +97,7 @@ static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_
             oCell.selectionStyle = UITableViewCellSelectionStyleNone ;
             UISwitch* oSwitch = (UISwitch*)oCell.accessoryView ;
             oSwitch.on = [ [NSUserDefaults standardUserDefaults] boolForKey:SECT1_OPTION_KEY[iRow] ] ;
+            oSwitch.tag = iRow ;
             break ;
     }
     
@@ -111,6 +112,24 @@ static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_
 - (IBAction)done:(id)sender
 {
     [self.delegate flipsideViewControllerDidFinish:self];
+}
+
+
+
+-(IBAction) switchChanged:(UISwitch*)a_oSenderSwitch
+{
+    int iRow = a_oSenderSwitch.tag ;
+    switch( iRow )
+    {
+        case 2 :
+        {
+            BOOL autoLockOn = a_oSenderSwitch.on ;
+            [UIApplication sharedApplication].idleTimerDisabled = NO==autoLockOn ;
+            NSUserDefaults* oUserDefs = [NSUserDefaults standardUserDefaults] ;
+            [ oUserDefs setBool:autoLockOn forKey:CLOCK_OPTION_AUTOLOCK ] ;
+        }
+        break;
+    }
 }
 
 @end

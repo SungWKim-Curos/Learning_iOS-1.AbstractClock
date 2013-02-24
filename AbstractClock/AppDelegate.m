@@ -48,6 +48,10 @@ static NSString* const oFIRST_RUN = @"FirstRun" ;
     self.mainViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
     self.window.rootViewController = self.mainViewController;
     [self.window makeKeyAndVisible];
+    
+    BOOL autolockOn = [ [NSUserDefaults standardUserDefaults] boolForKey:CLOCK_OPTION_AUTOLOCK ] ;
+    [ UIApplication sharedApplication ].idleTimerDisabled = NO==autolockOn ;
+    
     return YES;
 }
 
