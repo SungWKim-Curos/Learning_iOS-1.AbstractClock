@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 curos. All rights reserved.
 //
 
+#import "Project.h"
 #import "MainViewController.h"
 
 static const int iSHAPE_ARRAY_SIZE = 10 ;
@@ -68,7 +69,7 @@ static NSString* const SHAPE_NAME_FMT[] = { @"PatchSquare%d.png", @"PatchCircle%
         UIImageView* oImgVw = [ [UIImageView alloc] initWithImage:oImg ] ;
         
         oImgVw.transform = scaleTransf ;
-        oImgVw.center = CGPointMake( RAND_INT(0,320), RAND_INT(0,480) ) ;
+        oImgVw.center = CGPointMake( RAND_INT(0,GetScreenWidth()), RAND_INT(0,GetScreenHeight()) ) ;
         oImgVw.alpha = 0 ;
         
         [ _oShapeVwArr addObject:oImgVw ] ;
@@ -225,7 +226,7 @@ void ClearScreen( MainViewController* a_oSelf )
     {
         oImgVw.alpha = 0 ;
         oImgVw.transform = scaleTransf ;
-        oImgVw.center = CGPointMake( RAND_INT(0,320), RAND_INT(0,480) ) ;
+        oImgVw.center = CGPointMake( RAND_INT(0,GetScreenWidth()), RAND_INT(0,GetScreenHeight()) ) ;
     }
 }
 

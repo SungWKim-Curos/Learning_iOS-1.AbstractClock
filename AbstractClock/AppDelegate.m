@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 curos. All rights reserved.
 //
 
+#import "Project.h"
 #import "AppDelegate.h"
 
 #import "MainViewController.h"
@@ -43,7 +44,9 @@ static NSString* const oFIRST_RUN = @"FirstRun" ;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    CGRect bounds = [ UIScreen mainScreen ].bounds ;
+    TakeScreenSize( &bounds.size ) ;
+    self.window = [[UIWindow alloc] initWithFrame:bounds];
     // Override point for customization after application launch.
     self.mainViewController = [[MainViewController alloc] initWithNibName:@"MainViewController" bundle:nil];
     self.window.rootViewController = self.mainViewController;
