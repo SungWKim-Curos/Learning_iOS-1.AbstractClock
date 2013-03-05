@@ -90,19 +90,25 @@ static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_
     UITableViewCell* oCell = [ a_oTblVw dequeueReusableCellWithIdentifier:REUSE_ID[iSect] ] ;
     if( nil == oCell )
     {
-        if( 1 == iSect )
+        switch( iSect )
         {
-            UINib* oNib = [ UINib nibWithNibName:@"SwitchTableCell" bundle:[NSBundle mainBundle] ] ;
-            [ oNib instantiateWithOwner:self options:nil ] ;
-            oCell = _switchTableCell ;
-        }
-        else
-        {
-            oCell = [ [UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:REUSE_ID[iSect] ] ;
+            case 0 :
+            {
+                oCell = [ [UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:REUSE_ID[0] ] ;
+            }
+                break ;
+                
+            case 1 :
+            {
+                UINib* oNib = [ UINib nibWithNibName:@"SwitchTableCell" bundle:[NSBundle mainBundle] ] ;
+                [ oNib instantiateWithOwner:self options:nil ] ;
+                oCell = _switchTableCell ;
+            }
+                break ;
         }
     }
     
-    switch ( iSect )
+    switch( iSect )
     {
         case 0 :
         {
@@ -113,11 +119,13 @@ static NSString* const SECT1_OPTION_KEY[] = { CLOCK_OPTION_24HOUR, CLOCK_OPTION_
             break;
             
         case 1 :
+        {
             oCell.textLabel.text = SECT1_OPTION_LABEL[iRow] ;
             oCell.selectionStyle = UITableViewCellSelectionStyleNone ;
             UISwitch* oSwitch = (UISwitch*)oCell.accessoryView ;
             oSwitch.on = [ [NSUserDefaults standardUserDefaults] boolForKey:SECT1_OPTION_KEY[iRow] ] ;
             oSwitch.tag = iRow ;
+        }
             break ;
     }
     
